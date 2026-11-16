@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chronos – Digital Clock</title>
+  <meta name="description" content="Digital clock with stopwatch, countdown timer and alarm.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <main class="app">
+    <!-- Top bar -->
+    <header class="topbar">
+      <h1 class="brand">Digital-Clock(By Abinash Barik)</h1>
+      <div class="toolbar">
+        <button id="formatBtn" class="btn pill" aria-pressed="false" title="Switch 12/24-hour format">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span id="formatLabel">12h</span>
+        </button>
+        <button id="themeBtn" class="btn icon" aria-label="Toggle dark mode" title="Toggle theme">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>
+        </button>
+        <button id="fullscreenBtn" class="btn icon" aria-label="Toggle fullscreen" title="Fullscreen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main clock -->
+    <section class="card clock-card" aria-label="Current time">
+      <div class="clock" role="timer" aria-live="off">
+        <span id="hours" class="digit">00</span><span class="colon">:</span><span id="minutes" class="digit">00</span><span class="colon">:</span><span id="seconds" class="digit sec">00</span><span id="ampm" class="ampm">AM</span>
+      </div>
+      <p id="dateText" class="date">Loading…</p>
+      <p class="tz"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span id="tzText">—</span></p>
+    </section>
+
+    <!-- Tools -->
+    <div class="grid">
+      <!-- Stopwatch -->
+      <section class="card" aria-labelledby="swTitle">
+        <h2 id="swTitle">Stopwatch</h2>
+        <div id="swDisplay" class="readout">00:00:00.00</div>
+        <div class="row">
+          <button id="swStart" class="btn primary">Start</button>
+          <button id="swPause" class="btn" disabled>Pause</button>
+          <button id="swLap" class="btn" disabled>Lap</button>
+          <button id="swReset" class="btn">Reset</button>
+        </div>
+        <ol id="lapList" class="laps" aria-label="Laps"></ol>
+      </section>
+
+      <!-- Countdown -->
+      <section class="card" aria-labelledby="tmTitle">
+        <h2 id="tmTitle">Countdown timer</h2>
+        <div class="fields">
+          <label>Hours<input id="tmH" type="number" min="0" max="99" value="0" inputmode="numeric"></label>
+          <label>Minutes<input id="tmM" type="number" min="0" max="59" value="5" inputmode="numeric"></label>
+          <label>Seconds<input id="tmS" type="number" min="0" max="59" value="0" inputmode="numeric"></label>
+        </div>
+        <div id="tmDisplay" class="readout">00:05:00</div>
+        <div class="progress" aria-hidden="true"><div id="tmBar"></div></div>
+        <div class="row">
+          <button id="tmStart" class="btn primary">Start</button>
+          <button id="tmPause" class="btn" disabled>Pause</button>
+          <button id="tmReset" class="btn">Reset</button>
+        </div>
+        <p id="tmMsg" class="msg" role="status"></p>
+      </section>
+
+      <!-- Alarm -->
+      <section class="card" aria-labelledby="alTitle">
+        <h2 id="alTitle">Alarm clock</h2>
+        <form id="alarmForm" class="fields alarm-fields" novalidate>
+          <label>Time<input id="alTime" type="time" required></label>
+          <label class="grow">Label<input id="alLabel" type="text" maxlength="40" placeholder="Wake up"></label>
+          <button class="btn primary" type="submit">Set alarm</button>
+        </form>
+        <p id="alMsg" class="msg" role="status"></p>
+        <ul id="alarmList" class="alarms" aria-label="Alarms"></ul>
+      </section>
+    </div>
+
+    <footer class="foot">Preferences are saved in your browser.</footer>
+  </main>
+
+  <!-- Alarm / timer alert dialog -->
+  <div id="alert" class="alert" hidden role="alertdialog" aria-modal="true" aria-labelledby="alertTitle">
+    <div class="alert-box">
+      <h2 id="alertTitle">Alarm</h2>
+      <p id="alertText"></p>
+      <button id="alertClose" class="btn primary">Dismiss</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
